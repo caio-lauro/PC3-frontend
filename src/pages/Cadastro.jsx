@@ -6,7 +6,7 @@ export default function Cadastro() {
             <Header />
             <main className="h-screen">
                 <div className="flex content-center items-center justify-center">
-                    <form className="bg-white/80 border border-black/25 backdrop-blur-sm shadow-md rounded pt-4 px-8 pb-4 mb-4">
+                    <form className="bg-white/80 border border-black/25 backdrop-blur-sm shadow-md rounded pt-4 px-8 pb-4 mb-4" method="POST">
                         <div className="mb-4">
                             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
                                 Nome
@@ -50,7 +50,7 @@ export default function Cadastro() {
                         </div>
 
                         <div className="flex items-center justify-center">
-                            <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+                            <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                                 Registrar
                             </button>
                         </div>
