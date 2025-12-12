@@ -19,7 +19,7 @@ export default function Index() {
 			<Header />
 			<main className="h-screen">
 				<div className="flex content-center items-center justify-center h-screen">
-					<div className="p-35 bg-white/50 backdrop-blur-sm rounded-lg shadow-lg -translate-y-16">
+					<div className="p-30 bg-white/50 backdrop-blur-sm rounded-lg shadow-lg -translate-y-16">
                         <h1 className="text-7xl text-orange-400 font-semibold">
                             Que bom que está aqui!
                         </h1>
