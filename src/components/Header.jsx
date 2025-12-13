@@ -7,7 +7,7 @@ export default function Header() {
 
 	const [isHovering, setIsHovering] = useState({
 		pedido: false,
-		lista: false
+		relatorio: false
 	});
 
 	const handleHovering = (e) => {
@@ -81,8 +81,8 @@ export default function Header() {
 								<a
 									className="flex items-center gap-x-2 rounded-md bg-red-500 px-2.5 py-2.5 text-sm font-medium text-white 
 										transition delay-50 duration-300 ease-in-out hover:scale-110 hover:bg-red-700"
-									href="/lista"
-									id="lista"
+									href="/relatorio"
+									id="relatorio"
 									onMouseEnter={handleHovering}
 									onMouseLeave={handleHovering}
 								>
@@ -135,7 +135,7 @@ export default function Header() {
 
 									<span 
 										className={`
-											${isHovering.lista ? "opacity-100" : "opacity-0 -ml-2 max-w-0 max-h-0"}
+											${isHovering.relatorio ? "opacity-100" : "opacity-0 -ml-2 max-w-0 max-h-0"}
 											transition-all duration-500 ease-in-out overflow-hidden font-bold
 										`}
 									>
