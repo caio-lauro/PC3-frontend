@@ -5,8 +5,12 @@ export default function Login() {
         <>
             <Header />
             <main className="h-screen">
-                <div className="flex content-center items-center justify-center">
-                    <form className="bg-white/80 border border-black/25 backdrop-blur-sm shadow-md rounded pt-4 px-8 pb-4 mb-4" method="POST">
+                <div className="flex content-center items-center justify-center h-screen">
+                    <form className="bg-white/80 border border-black/10 backdrop-blur-sm shadow-lg rounded pt-4 px-8 pb-4 mb-4 -translate-y-16" method="POST">
+                        <p className="text-xl text-gray-700 text-center mb-4">
+                            Informe seus dados para fazer login.
+                        </p>
+                        
                         <div className="mb-4">
                             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                                 E-mail

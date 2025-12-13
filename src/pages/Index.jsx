@@ -27,7 +27,7 @@ export default function Index() {
 							<></>
 						) : (
 							<>
-								<p className="mt-15 text-6xl text-center text-orange-400">
+								<p className="mt-15 mb-8 text-6xl text-center text-orange-400">
 									Vamos começar?
 								</p>
 
