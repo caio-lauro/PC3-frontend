@@ -17,9 +17,9 @@ export default function Index() {
 	return (
 		<>
 			<Header />
-			<main className="h-screen">
+			<main className="max-h-screen">
 				<div className="flex content-center items-center justify-center h-screen">
-					<div className="p-30 bg-white/50 backdrop-blur-sm rounded-lg shadow-lg -translate-y-16">
+					<div className="p-30 bg-white/50 backdrop-blur-sm rounded-lg shadow-lg">
 						{loggedIn ? (
 							<>
 								<h1 className="text-7xl text-orange-400 text-center font-semibold">

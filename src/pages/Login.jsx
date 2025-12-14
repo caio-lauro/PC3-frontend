@@ -23,7 +23,7 @@ export default function Login() {
 			<main className="h-screen">
 				<div className="flex content-center items-center justify-center h-screen">
 					<form
-						className="bg-white/80 border border-black/10 backdrop-blur-sm shadow-lg rounded pt-4 px-8 pb-4 mb-4 -translate-y-16"
+						className="bg-white/80 border border-black/10 backdrop-blur-sm shadow-lg rounded pt-4 px-8 pb-4 mb-4"
 						method="POST"
 					>
 						<p className="text-xl text-gray-700 text-center mb-4">

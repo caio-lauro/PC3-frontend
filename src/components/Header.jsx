@@ -30,8 +30,8 @@ export default function Header() {
 	}, []);
 
 	return (
-		<header className="bg-white">
-			<div className="mx-auto flex h-16 max-w-7xl items-center gap-8 px-4 sm:px-6 lg:px-8">
+		<header className="fixed top-0 w-screen mt-2">
+			<div className="bg-white/75 backdrop-blur-sm rounded-lg mx-auto flex h-16 max-w-7xl items-center gap-8 px-4 sm:px-6 lg:px-8">
 				<div className="flex flex-1 items-center justify-end md:justify-between">
 					<nav className="hidden md:block">
 						<ul className="flex items-center gap-6 text-sm">
