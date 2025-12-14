@@ -110,9 +110,9 @@ export default function Pedido() {
                             </div>
 
                             <div className="justify-right text-right content-right items-right mt-4">
-                                <label htmlFor={`prato-${idx}`}>Fazer pedido</label>
+                                <label htmlFor={`prato-${idx}`}>Adicionar ao pedido</label>
                                 <button 
-                                    className="btn ml-2 rounded text-center items-center bg-black text-white"
+                                    className="btn ml-2 rounded-xl h-7 w-7 align-middle bg-black text-white font-xl cursor-pointer"
                                     name={`prato-${idx}`} 
                                     id={`prato-${idx}`} 
                                     onClick={handleOrder} 
