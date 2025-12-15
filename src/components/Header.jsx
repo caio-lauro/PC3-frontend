@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import isLoggedIn from "../api/utils";
 
-export default function Header() {
+export default function Header() {	
 	const [loggedIn, setLoggedIn] = useState(false);
 
 	const [isHovering, setIsHovering] = useState({
@@ -18,6 +18,10 @@ export default function Header() {
 			...isHovering,
 			[field]: state
 		});
+	}
+
+	const handleExit = () => {
+		localStorage.removeItem("token");
 	}
 
 	useEffect(() => {
@@ -140,6 +144,37 @@ export default function Header() {
 										`}
 									>
 										Pedidos
+									</span>
+								</a>
+
+								<a
+									className="flex items-center gap-x-2 rounded-md bg-red-500 px-2.5 py-2.5 text-sm font-medium text-white 
+										transition delay-50 duration-300 ease-in-out hover:scale-110 hover:bg-red-700"
+									id="sair"
+									href="/"
+									onMouseEnter={handleHovering}
+									onMouseLeave={handleHovering}
+									onClick={handleExit}
+								>
+									<svg
+										width="24px"
+										height="24px"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke-width="2" 
+										stroke="white"
+									>
+										<path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2"></path>
+										<path d="M7 12h14l-3 -3m0 6l3 -3"></path>
+									</svg>
+									
+									<span 
+										className={`
+											${isHovering.sair ? "opacity-100" : "opacity-0 -ml-2 max-w-0 max-h-0"}
+											transition-all duration-500 ease-in-out overflow-hidden font-bold
+										`}
+									>
+										Sair
 									</span>
 								</a>
 							</div>
