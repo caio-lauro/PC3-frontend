@@ -33,9 +33,9 @@ export default function Cadastro() {
 		}
 
 		if (id === "name") {
-			if (value.length() < 3) {
+			if (value.length < 3) {
 				setError(`O ${name} deve possuir mais de 3 letras.`);
-			} else if (!/^\p{L}+$/u.test(value)) {
+			} else if (!/^[\p{L} ]+$/u.test(value)) {
 				setError(`O ${name} deve possuir apenas letras do alfabeto.`);
 			}
 		} else if (id === "phone") {
