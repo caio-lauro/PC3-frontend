@@ -39,15 +39,18 @@ export default function Cadastro() {
 				setError(`O ${name} deve possuir apenas letras do alfabeto.`);
 			}
 		} else if (id === "phone") {
-			const phoneRegex = /^([0-9]{2})([9]{0,1})([0-9]{4,5})([0-9]{4})$/;
+			const phoneRegex = /^([1-9]{2})([9]?)([0-9]{4})([0-9]{4})$/;
 			let str = value.replace(/[^0-9]/g, "").slice(0, 11);
 
-			const result = str.replace(phoneRegex, "($1) $2 $3-$4");
+			const result = str.replace(phoneRegex, (match, ddd, nine, part1, part2) => {
+				const nineFormatted = nine ? " 9" : "";
+				return (`(${ddd})${nineFormatted} ${part1}-${part2}`);
+			});
 
 			setFormData({
 				...formData,
 				[id]: result
-			})
+			});
 		} else if (id === "cep") {
 			const cepRegex = /^([0-9]{5})([0-9]{3})$/;
 			let str = value.replace(/[^0-9]/g, "").slice(0, 8);
@@ -81,6 +84,7 @@ export default function Cadastro() {
 
 			if (!response.ok) {
 				setError(data.error);
+				return ;
 			}
 
 			navigate("/login", { replace: true });
