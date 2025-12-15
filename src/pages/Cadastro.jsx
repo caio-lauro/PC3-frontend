@@ -80,7 +80,7 @@ export default function Cadastro() {
 			const data = await response.json();
 
 			if (!response.ok) {
-				setError(response.error);
+				setError(data.error);
 			}
 
 			navigate("/login", { replace: true });
