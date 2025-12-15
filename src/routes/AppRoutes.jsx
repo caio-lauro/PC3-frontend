@@ -6,6 +6,7 @@ import Cadastro from "../pages/Cadastro";
 import Login from "../pages/Login";
 import Pedido from "../pages/Pedido";
 import Relatorio from "../pages/Relatorio";
+import Admin from "../pages/Admin";
 
 export default function AppRoutes() {
     return (
@@ -15,6 +16,7 @@ export default function AppRoutes() {
             <Route path="/login" element={<Login />} />
             <Route path="/pedido" element={<Pedido />} />
             <Route path="/relatorio" element={<Relatorio />} />
+            <Route path="/admin" element={<Admin />} />
         </Routes>
     );
 }
