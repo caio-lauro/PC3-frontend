@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import isLoggedIn from "../api/utils";
+import { isLoggedIn } from "../api/utils";
 
 export default function Header() {	
 	const [loggedIn, setLoggedIn] = useState(false);
@@ -34,7 +34,7 @@ export default function Header() {
 	}, []);
 
 	return (
-		<header className="fixed top-0 w-screen mt-2">
+		<header className="fixed top-0 w-screen mt-0">
 			<div className="bg-white/75 backdrop-blur-sm rounded-lg mx-auto flex h-16 max-w-7xl items-center gap-8 px-4 sm:px-6 lg:px-8">
 				<div className="flex flex-1 items-center justify-end md:justify-between">
 					<nav className="hidden md:block">
@@ -161,7 +161,7 @@ export default function Header() {
 										height="24px"
 										viewBox="0 0 24 24"
 										fill="none"
-										stroke-width="2" 
+										strokeWidth="2" 
 										stroke="white"
 									>
 										<path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2"></path>

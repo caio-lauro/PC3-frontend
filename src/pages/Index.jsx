@@ -1,5 +1,5 @@
 import Header from "../components/Header";
-import isLoggedIn from "../api/utils";
+import { isLoggedIn } from "../api/utils";
 import { useEffect, useState } from "react";
 
 export default function Index() {

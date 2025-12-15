@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
-import isLoggedIn from "../api/utils";
+import { isLoggedIn } from "../api/utils";
 
 export default function Cadastro() {
     const navigate = useNavigate();
