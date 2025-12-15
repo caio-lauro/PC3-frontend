@@ -34,7 +34,7 @@ export default function Cadastro() {
 
 		if (id === "name") {
 			if (value.length < 3) {
-				setError(`O ${name} deve possuir mais de 3 letras.`);
+				setError(`O ${name} deve possuir pelo menos 3 letras.`);
 			} else if (!/^[\p{L} ]+$/u.test(value)) {
 				setError(`O ${name} deve possuir apenas letras do alfabeto.`);
 			}
