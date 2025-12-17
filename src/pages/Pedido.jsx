@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getPratos, isLoggedIn } from "../api/utils";
+import { getPratos, isLoggedIn, isLoggedInSync } from "../api/utils";
 import Header from "../components/Header";
 
 export default function Pedido() {
     const navigate = useNavigate();
+    const [alert, setAlert] = useState("");
     const [pratos, setPratos] = useState([]);
     const [order, setOrder] = useState("");
 
     useEffect(() => {
-        async function navigateIfLogged() {
-            const logged = await isLoggedIn();
+        function navigateIfLogged() {
+            const logged = isLoggedInSync();
             if (!logged) {
                 navigate("/", { replace: true });
             }
@@ -52,14 +53,63 @@ export default function Pedido() {
         setOrder(e.target.id);
     };
 
-    const handleFinish = () => {
-        // TODO
+    const handleFinish = async (e) => {
+        e.preventDefault();
+
+        let itens = [];
+        Object.keys(localStorage).forEach((key) => {
+            if (key.includes('prato')) {
+                itens.push({
+                    prato: key.slice(6),
+                    quantidade: localStorage.getItem(key)
+                });
+            }
+        });
+
+        if (!itens) return;
+
+        const API_URL = import.meta.env.VITE_API_URL;
+
+        try {
+            const loggedIn = await isLoggedIn();
+
+            if (!loggedIn) {
+                navigate("/", { replace: true });
+            }
+
+            const res = await fetch(`${API_URL}/api/pedir`, {
+                method: "POST",
+				headers: { 
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                },
+				body: JSON.stringify(itens)
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                console.error(data.error);
+                setAlert("Não foi possível completar o seu pedido!");
+                setTimeout(() => {
+                    setAlert("");
+                }, 5000);
+            } else {
+                for (const item of itens) {
+                    localStorage.removeItem('prato-' + item.prato);
+                }
+
+                navigate("/relatorio", { replace: true });
+            }
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     const handleCancel = () => {
         let to_remove = [];
         Object.keys(localStorage).forEach((key) => {
-            if (key.includes('prato')) to_remove.push(key)
+            if (key.includes('prato')) to_remove.push(key);
         })
 
         for (const key of to_remove) {
@@ -71,6 +121,11 @@ export default function Pedido() {
 
     return (
         <>
+            {alert && 
+                <p className="z-20 fixed top-5 left-1/2 -translate-x-1/2 bg-red-100 rounded-lg text-red-600 text-center text-lg px-20 py-10">
+                    {alert}
+                </p>
+            }
             <Header />
             <main className="min-h-screen">
                 <div className="flex flex-col content-center items-center h-fit mt-25">
@@ -102,10 +157,10 @@ export default function Pedido() {
                             </div>
 
                             <div className="justify-right text-right content-right items-right mt-4">
-                                <label htmlFor={`prato-${idx}`}>Adicionar ao pedido</label>
+                                <label htmlFor={`prato-${prato._id}`}>Adicionar ao pedido</label>
                                 <button 
                                     className="btn ml-2 mb-2 rounded-xl h-7 w-7 align-middle bg-black text-white font-xl cursor-pointer"
-                                    name={`prato-${idx}`} 
+                                    name={`prato-${prato._id}`} 
                                     id={`prato-${prato._id}`} 
                                     onClick={handleOrder} 
                                 >
