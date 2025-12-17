@@ -12,6 +12,9 @@ export default function Admin() {
     const [error, setError] = useState("");
     const [atualizado, setAtualizado] = useState(false);
 
+    const adminUser = import.meta.env.VITE_ADMIN_USER;
+    const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD;
+
     const handleChange = (e) => {
         const id = e.target.id;
         const value = e.target.value;
@@ -26,13 +29,13 @@ export default function Admin() {
         const queryString = window.location.search;
         const params = new URLSearchParams(queryString);
 
-        if (params.get("usuario") === "admin" && params.get("senha") === "admin") {
+        if (params.get("usuario") === adminUser && params.get("senha") === adminPassword) {
             setLoggedIn(true);
         }
     }, [])
 
     const handleSubmit = () => {
-        if (loginData.user !== "admin" || loginData.password !== "admin") {
+        if (loginData.user !== adminUser || loginData.password !== adminPassword) {
             setError("Credenciais incorretas.");
             return;
         }
@@ -129,8 +132,10 @@ export default function Admin() {
 
         if (error) return;
 
+        const API_URL = import.meta.env.VITE_API_URL;
+
         try {
-			const response = await fetch('http://localhost:3000/api/adicionar', {
+			const response = await fetch(`${API_URL}/api/adicionar`, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(formData)
@@ -156,10 +161,12 @@ export default function Admin() {
     }
 
     const handleRemove = async (e) => {
-        const id = parseInt(e.target.id.slice(6));
+        const id = e.target.id.slice(6);
+
+        const API_URL = import.meta.env.VITE_API_URL;
         
         try {
-            const res = await fetch("http://localhost:3000/api/remover", {
+            const res = await fetch(`${API_URL}/api/remover`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ id: id })
@@ -333,21 +340,21 @@ export default function Admin() {
                         }
                     </form>
                     
-                    <div className="-z-1 bg-white/80 border border-black/10 backdrop-blur-sm shadow-lg rounded px-8 py-5">
+                    <div className="bg-white/80 border border-black/10 backdrop-blur-sm shadow-lg rounded px-8 py-5">
                         <div className="sticky top-[6.3%] mx-auto z-1 px-4 py-2 bg-white/90 backdrop-blur-sm rounded mb-4">
                             <p className="text-2xl font-bold text-center mb-4">
                                 Pratos no sistema
                             </p>
                         </div>
                         {pratos?.map((prato) => (
-                            <div key={prato.id} className="prato mb-4 bg-white/80 border border-black/10 backdrop-blur-sm shadow-lg rounded px-8 py-5">
+                            <div key={prato._id} className="prato mb-4 bg-white/80 border border-black/10 backdrop-blur-sm shadow-lg rounded px-8 py-5">
                                 <div className="flex justify-between w-100">
                                     <p className="text-left text-xl font-semibold">
                                         {prato.nome}
                                     </p>
                                     
-                                    <p className="text-right text-lg">
-                                        R$ {prato.preco.toString().replace('.', ',')}
+                                    <p className="fixed right-5 text-lg">
+                                        R$ {prato.preco.toFixed(2).toString().replace('.', ',')}
                                     </p>
                                 </div>
 
@@ -358,20 +365,20 @@ export default function Admin() {
                                 <p className="mt-5 font-[600]">
                                     Ingredientes
                                 </p>
-                                <div className="grid grid-cols-3">
-                                    {prato.ingredientes?.split(',').map((ingrediente, idx) => (
+                                <div className="grid grid-cols-2">
+                                    {prato.ingredientes?.map((ingrediente, idx) => (
                                         <p key={idx}>
-                                            {ingrediente}
+                                            {ingrediente.at(0).toUpperCase() + ingrediente.slice(1)}
                                         </p>
                                     ))}
                                 </div>
 
                                 <div className="justify-right text-right content-right items-right mt-4">
-                                    <label htmlFor={`prato-${prato.id}`}>Remover prato</label>
+                                    <label htmlFor={`prato-${prato._id}`}>Remover prato</label>
                                     <button 
                                         className="btn ml-2 mb-2 rounded-xl h-7 w-7 align-middle bg-black text-white font-xl cursor-pointer"
-                                        name={`prato-${prato.id}`} 
-                                        id={`prato-${prato.id}`} 
+                                        name={`prato-${prato._id}`} 
+                                        id={`prato-${prato._id}`} 
                                         onClick={handleRemove} 
                                     >
                                         -

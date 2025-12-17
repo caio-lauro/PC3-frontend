@@ -3,7 +3,9 @@ export async function isLoggedIn() {
 
     if (!token) return false;
 
-    const res = await fetch("http://localhost:3000/api/me", {
+    const API_URL = import.meta.env.VITE_API_URL;
+
+    const res = await fetch(`${API_URL}/api/me`, {
         headers: {
             Authorization: `Bearer ${token}`
         }
@@ -15,7 +17,8 @@ export async function isLoggedIn() {
 }
 
 export async function getPratos() {
-    const res = await fetch("http://localhost:3000/api/pratos");
+    const API_URL = import.meta.env.VITE_API_URL;
+    const res = await fetch(`${API_URL}/api/pratos`);
 
     const data = await res.json();
 

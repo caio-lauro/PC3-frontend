@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { isLoggedIn } from "../api/utils";
+import { getPratos, isLoggedIn } from "../api/utils";
 import Header from "../components/Header";
 
 export default function Pedido() {
     const navigate = useNavigate();
+    const [pratos, setPratos] = useState([]);
     const [order, setOrder] = useState("");
 
     useEffect(() => {
@@ -16,6 +17,20 @@ export default function Pedido() {
         }
 
         navigateIfLogged();
+    }, []);
+
+    useEffect(() => {
+        async function setPratosDB() {
+            const data = await getPratos();
+
+            if (!data.ok) {
+                setError(data.error);
+            } else {
+                setPratos(data.pratos);
+            }
+        }
+
+        setPratosDB();
     }, []);
 
     useEffect(() => {
@@ -54,61 +69,6 @@ export default function Pedido() {
         window.location.reload();
     }
 
-    const pratos = [
-        {
-            nome: "Prato 1",
-            preco: 10.0,
-            categoria: "Entrada",
-            ingredientes: [
-                "Ingrediente 1", "Ingrediente 2", "Ingrediente 3",
-                "Ingrediente 4", "Ingrediente 5", "Ingrediente 6"
-            ]
-        },
-        {
-            nome: "Prato 2",
-            preco: 20.0,
-            categoria: "Principal",
-            ingredientes: [
-                "Ingrediente 1", "Ingrediente 2", "Ingrediente 3",
-                "Ingrediente 4"
-            ]
-        },
-        {
-            nome: "Prato 3",
-            preco: 5.99,
-            categoria: "Sobremesa",
-            ingredientes: [
-                "Ingrediente 1", "Ingrediente 2"
-            ]
-        },
-        {
-            nome: "Prato 4",
-            preco: 10.0,
-            categoria: "Entrada",
-            ingredientes: [
-                "Ingrediente 1", "Ingrediente 2", "Ingrediente 3",
-                "Ingrediente 4", "Ingrediente 5", "Ingrediente 6"
-            ]
-        },
-        {
-            nome: "Prato 5",
-            preco: 20.0,
-            categoria: "Principal",
-            ingredientes: [
-                "Ingrediente 1", "Ingrediente 2", "Ingrediente 3",
-                "Ingrediente 4"
-            ]
-        },
-        {
-            nome: "Prato 6",
-            preco: 5.99,
-            categoria: "Sobremesa",
-            ingredientes: [
-                "Ingrediente 1", "Ingrediente 2"
-            ]
-        },
-    ];
-
     return (
         <>
             <Header />
@@ -121,22 +81,22 @@ export default function Pedido() {
                                     {prato.nome}
                                 </p>
                                 
-                                <p className="text-right text-lg">
-                                    R$ {prato.preco.toString().replace('.', ',')}
+                                <p className="fixed right-5 text-lg">
+                                    R$ {prato.preco.toFixed(2).toString().replace('.', ',')}
                                 </p>
                             </div>
 
                             <p>
-                                {prato.categoria}
+                                {prato.categoria.at(0).toUpperCase() + prato.categoria.slice(1)}
                             </p>
 
                             <p className="mt-5 font-[600]">
                                 Ingredientes
                             </p>
-                            <div className="grid grid-cols-3">
-                                {prato.ingredientes?.map((ingrediente, idx) => (
-                                    <p key={idx}>
-                                        {ingrediente}
+                            <div className="grid grid-cols-2">
+                                {prato.ingredientes?.map((ingrediente, ingrediente_idx) => (
+                                    <p key={ingrediente_idx}>
+                                        {ingrediente.at(0).toUpperCase() + ingrediente.slice(1)}
                                     </p>
                                 ))}
                             </div>
@@ -146,14 +106,14 @@ export default function Pedido() {
                                 <button 
                                     className="btn ml-2 mb-2 rounded-xl h-7 w-7 align-middle bg-black text-white font-xl cursor-pointer"
                                     name={`prato-${idx}`} 
-                                    id={`prato-${idx}`} 
+                                    id={`prato-${prato._id}`} 
                                     onClick={handleOrder} 
                                 >
                                     +
                                 </button>
-                                {localStorage.getItem(`prato-${idx}`) && 
+                                {localStorage.getItem(`prato-${prato._id}`) && 
                                     <p className="fixed right-2 bottom-2">
-                                        x{localStorage.getItem(`prato-${idx}`)}
+                                        x{localStorage.getItem(`prato-${prato._id}`)}
                                     </p>
                                 }
                             </div>
